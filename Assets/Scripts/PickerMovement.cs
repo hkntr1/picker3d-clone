@@ -5,19 +5,36 @@ using Dreamteck.Splines;
 
 public class PickerMovement : MonoBehaviour
 {
-    [SerializeField] SplineFollower sf;
+    public Rigidbody rb;
+    public float speed;
+    [SerializeField] float horizontalSpeed;
     [SerializeField] DynamicJoystick dj;
     [SerializeField] float horizontalInput;
+    #region Singleton
+    public static PickerMovement instance;
 
+    void Awake()
+    {
+        instance = this;
+    }
+    #endregion
     void Start()
     {
     }
     void FixedUpdate()
     {
-        if (dj.Horizontal != 0)
+        rb.MovePosition(transform.position+Vector3.right*dj.Horizontal*horizontalSpeed*Time.fixedDeltaTime+Vector3.forward*speed*Time.fixedDeltaTime);
+        if (transform.position.x > 1.7f)
         {
-            horizontalInput = dj.Horizontal;
+            Vector3 newPos = transform.position;
+            newPos.x = 1.7f;
+            transform.position = newPos;
         }
-       sf.motion.offset= Vector2.Lerp(sf.motion.offset,new Vector2(Mathf.Clamp(horizontalInput*1.7f,-1.7f,1.7f),0),0.1f);
+        if (transform.position.x < -1.7f)
+        {
+            Vector3 newPos = transform.position;
+            newPos.x = -1.7f;
+            transform.position = newPos;
+        }
     }
 }
