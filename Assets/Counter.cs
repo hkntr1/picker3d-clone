@@ -12,4 +12,11 @@ public class Counter : MonoBehaviour
             BallList.Add(other.GetComponent<Ball>());
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ball"))
+        {
+            BallList.Remove(other.GetComponent<Ball>());
+        }
+    }
 }
