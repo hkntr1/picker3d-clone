@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ball
   - CheckPoint
+  - Prize
+  - Spawner
   layers:
   - Default
   - TransparentFX

@@ -7,6 +7,7 @@ public class PickerController : MonoBehaviour
 {
    
     public List<Ball> Balls;
+    public GameObject Wings;
     
     #region Singleton
     public static PickerController instance;
@@ -25,7 +26,17 @@ public class PickerController : MonoBehaviour
         }
         else if (other.CompareTag("CheckPoint"))
         {
-            LevelController.instance.CheckPoint(other.transform);
+          LevelController.instance.CheckPoint(other.transform);
+        }
+        else if (other.CompareTag("Prize"))
+        {
+            Wings.SetActive(true);
+            other.gameObject.SetActive(false);
+        }
+        else if (other.CompareTag("Spawner"))
+        {
+            other.GetComponent<SpawnerController>().StartSpawn();
+        
         }
     }
     private void OnTriggerExit(Collider other)

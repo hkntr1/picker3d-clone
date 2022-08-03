@@ -19,8 +19,10 @@ public class LevelController : MonoBehaviour
             for (int i = 0; i < PickerController.instance.Balls.Count-1; i++)
             {
                 PickerController.instance.Balls[i].rb.AddForce(transform.forward * 10);
-                StartCoroutine(CheckCoroutine(checkpoint.GetComponent<CheckPoint>()));
+                
+               
             }
+             StartCoroutine(CheckCoroutine(checkpoint.GetComponent<CheckPoint>()));
         });
 
     } 
@@ -29,7 +31,13 @@ public class LevelController : MonoBehaviour
         yield return new WaitForSeconds(5f);
         if (cp.pit.CheckLimit())
         {
-            Debug.Log("Gooo");
+            yield return new WaitForSeconds(2f);
+            cp.pit.ground.DOMoveY(0.25f, 0.5f).SetEase(Ease.InOutBack).OnComplete(() =>
+            {;
+                cp.pit.barrier.DORotate(new Vector3(0,0,90),1f);
+                DOTween.To(() => PickerMovement.instance.speed, x => PickerMovement.instance.speed = x, 3, 1f);
+               
+            });
         }
         else Debug.Log("false");
     }
