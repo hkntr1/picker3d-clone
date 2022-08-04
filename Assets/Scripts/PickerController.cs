@@ -8,7 +8,7 @@ public class PickerController : MonoBehaviour
    
     public List<Ball> Balls;
     public GameObject Wings;
-    
+    public bool isCreated;
     #region Singleton
     public static PickerController instance;
 
@@ -42,6 +42,12 @@ public class PickerController : MonoBehaviour
         else if (other.CompareTag("Ramp"))
         {
             LevelController.instance.Ramp();
+            if (!isCreated)
+            {
+            SceneManager.instance.CreateNextLevel();
+                isCreated = true;
+            }
+
 
         }
     }

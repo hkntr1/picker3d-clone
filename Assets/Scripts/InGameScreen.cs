@@ -10,5 +10,6 @@ public class InGameScreen : MonoBehaviour
     {
         forceController.gameObject.SetActive(true);
         dynamicjoystick.SetActive(false);
+        
     }
 }

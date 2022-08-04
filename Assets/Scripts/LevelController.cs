@@ -21,8 +21,7 @@ public class LevelController : MonoBehaviour
             PickerController.instance.Balls[i].rb.AddForce(transform.forward * 3,ForceMode.Impulse);
         }
         DOTween.To(() => PickerMovement.instance.speed, x => PickerMovement.instance.speed = x, 0, 1f).OnComplete(() =>
-        {
-            
+        {         
              StartCoroutine(CheckCoroutine(checkpoint.GetComponent<CheckPoint>()));
         });
 
@@ -48,6 +47,7 @@ public class LevelController : MonoBehaviour
         pickerMovement.boxCollider.isTrigger=false;
         pickerMovement.rb.isKinematic = false;
         pickerMovement.rb.constraints = RigidbodyConstraints.None;
+        pickerMovement.rb.constraints = RigidbodyConstraints.FreezePositionX;
         canvas.inGame.Ramp();
     }
 }
