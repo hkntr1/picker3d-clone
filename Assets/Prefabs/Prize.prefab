@@ -146,4 +146,4 @@ MonoBehaviour:
   y: 0
   z: 1
   isClockWise: 0
-  speed: 0
+  speed: 3

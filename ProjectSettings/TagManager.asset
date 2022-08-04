@@ -8,6 +8,7 @@ TagManager:
   - CheckPoint
   - Prize
   - Spawner
+  - Ramp
   layers:
   - Default
   - TransparentFX

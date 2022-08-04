@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 public class LevelController : MonoBehaviour
 {
+    public PickerMovement pickerMovement;
+    public UIController canvas;
     #region Singleton
     public static LevelController instance;
 
@@ -14,21 +16,20 @@ public class LevelController : MonoBehaviour
     #endregion
     public void CheckPoint(Transform checkpoint)
     {
+        for (int i = 0; i < PickerController.instance.Balls.Count; i++)
+        {
+            PickerController.instance.Balls[i].rb.AddForce(transform.forward * 3,ForceMode.Impulse);
+        }
         DOTween.To(() => PickerMovement.instance.speed, x => PickerMovement.instance.speed = x, 0, 1f).OnComplete(() =>
         {
-            for (int i = 0; i < PickerController.instance.Balls.Count-1; i++)
-            {
-                PickerController.instance.Balls[i].rb.AddForce(transform.forward * 10);
-                
-               
-            }
+            
              StartCoroutine(CheckCoroutine(checkpoint.GetComponent<CheckPoint>()));
         });
 
     } 
     public IEnumerator CheckCoroutine(CheckPoint cp)
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         if (cp.pit.CheckLimit())
         {
             yield return new WaitForSeconds(2f);
@@ -39,6 +40,14 @@ public class LevelController : MonoBehaviour
                
             });
         }
-        else Debug.Log("false");
+        else StateManager.instance.UpdateGameState(GameState.Fail);
+    }
+    public void Ramp()
+    {
+        pickerMovement.meshCollider.enabled = false;
+        pickerMovement.boxCollider.isTrigger=false;
+        pickerMovement.rb.isKinematic = false;
+        pickerMovement.rb.constraints = RigidbodyConstraints.None;
+        canvas.inGame.Ramp();
     }
 }

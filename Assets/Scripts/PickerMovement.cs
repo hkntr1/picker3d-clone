@@ -7,6 +7,8 @@ public class PickerMovement : MonoBehaviour
 {
     public Rigidbody rb;
     public float speed;
+    public MeshCollider meshCollider;
+    public BoxCollider boxCollider;
     [SerializeField] float horizontalSpeed;
     [SerializeField] DynamicJoystick dj;
     [SerializeField] float horizontalInput;
@@ -20,21 +22,27 @@ public class PickerMovement : MonoBehaviour
     #endregion
     void Start()
     {
+        meshCollider = GetComponent<MeshCollider>();
+        boxCollider = GetComponent<BoxCollider>();
     }
     void FixedUpdate()
     {
-        rb.MovePosition(transform.position+Vector3.right*dj.Horizontal*horizontalSpeed*Time.fixedDeltaTime+Vector3.forward*speed*Time.fixedDeltaTime);
-        if (transform.position.x > 1.7f)
+        if (StateManager.instance.eState == GameState.Runner)
         {
-            Vector3 newPos = transform.position;
-            newPos.x = 1.7f;
-            transform.position = newPos;
-        }
-        if (transform.position.x < -1.7f)
-        {
-            Vector3 newPos = transform.position;
-            newPos.x = -1.7f;
-            transform.position = newPos;
+            rb.MovePosition(transform.position + Vector3.right * dj.Horizontal * horizontalSpeed * Time.fixedDeltaTime + Vector3.forward * speed * Time.fixedDeltaTime);
+            if (transform.position.x > 1.7f)
+            {
+                Vector3 newPos = transform.position;
+                newPos.x = 1.7f;
+                transform.position = newPos;
+            }
+            if (transform.position.x < -1.7f)
+            {
+                Vector3 newPos = transform.position;
+                newPos.x = -1.7f;
+                transform.position = newPos;
+            }
+
         }
     }
 }

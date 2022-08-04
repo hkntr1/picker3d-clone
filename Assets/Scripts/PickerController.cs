@@ -26,7 +26,8 @@ public class PickerController : MonoBehaviour
         }
         else if (other.CompareTag("CheckPoint"))
         {
-          LevelController.instance.CheckPoint(other.transform);
+            Wings.SetActive(false);
+            LevelController.instance.CheckPoint(other.transform);
         }
         else if (other.CompareTag("Prize"))
         {
@@ -37,6 +38,11 @@ public class PickerController : MonoBehaviour
         {
             other.GetComponent<SpawnerController>().StartSpawn();
         
+        }
+        else if (other.CompareTag("Ramp"))
+        {
+            LevelController.instance.Ramp();
+
         }
     }
     private void OnTriggerExit(Collider other)

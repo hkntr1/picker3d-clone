@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4430132883389865830}
   - component: {fileID: 4430132883389865831}
+  - component: {fileID: 2387531491805746516}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,3 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7b36fc4f5894b48b8d3235814d9549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickerMovement: {fileID: 0}
+  canvas: {fileID: 0}
+--- !u!114 &2387531491805746516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430132883389865828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75a2fb43c49c504439802a56d81e487b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eState: 0
