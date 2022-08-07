@@ -8,6 +8,7 @@ public class ObjectPool : MonoBehaviour
     public List<GameObject> pooledObjects;
     public GameObject objectToPool;
     public int amountToPool;
+    public Transform poolParent;
     private void Awake()
     {
         SharedInstance = this;
@@ -20,6 +21,7 @@ public class ObjectPool : MonoBehaviour
         {
             tmp = Instantiate(objectToPool);
             tmp.SetActive(false);
+            tmp.transform.SetParent(poolParent);
             pooledObjects.Add(tmp);
         }
     }

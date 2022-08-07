@@ -20,8 +20,6 @@ public class PitController : MonoBehaviour
 
         if (counter.BallList.Count >= limit)
         {
-         
-
             return true;
         }
         else return false;

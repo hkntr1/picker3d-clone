@@ -7,8 +7,28 @@ public class SpawnerController : MonoBehaviour
     [SerializeField] ObjectPool pool;
     [SerializeField] SplineFollower sf;
     [SerializeField] rotateAround wing;
+    [SerializeField] List<Transform> spawnTargets;
     [SerializeField] Transform spawnTarget;
     [SerializeField] BoxCollider collider;
+    Mesh mesh;
+    public espawmerType ModifierType;
+    private void Start()
+    {
+        mesh = GetComponent<MeshFilter>().mesh;
+    }
+    public void BallBomb()
+    {
+        for (int i = 0; i < pool.amountToPool; i++)
+        {
+            GameObject ball = pool.GetPooledObject();
+            ball.SetActive(true);
+            ball.transform.position = spawnTargets[i].position;
+        }
+       
+
+        transform.gameObject.SetActive(false);
+    }
+
     public void StartSpawn()
     {
         StartCoroutine(SpawnCoroutine());
@@ -16,7 +36,7 @@ public class SpawnerController : MonoBehaviour
     public IEnumerator SpawnCoroutine()
     {
         collider.enabled = false;
-        sf.followSpeed = 5;
+        sf.followSpeed = 10;
         wing.speed = 5;
         yield return new WaitForSeconds(0.3f);
         for (int i = 0; i < pool.amountToPool; i++)
@@ -27,4 +47,9 @@ public class SpawnerController : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
     }
+}
+public enum espawmerType
+{
+    HELICOPTER,
+    BALLBOMB,
 }

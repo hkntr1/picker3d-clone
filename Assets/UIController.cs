@@ -20,6 +20,7 @@ public class UIController : MonoBehaviour
         startScreen.gameObject.SetActive(true);
         inGame.gameObject.SetActive(false);
         failScreen.gameObject.SetActive(false);
+        inGame.StartScreen();
     }
     public void InGame()
     {
@@ -32,5 +33,9 @@ public class UIController : MonoBehaviour
         failScreen.gameObject.SetActive(true);
         startScreen.gameObject.SetActive(false);
         inGame.gameObject.SetActive(false);
+    }
+    public void Ramp()
+    {
+        inGame.Ramp();
     }
 }

@@ -20,7 +20,7 @@ public class LevelController : MonoBehaviour
         {
             PickerController.instance.Balls[i].rb.AddForce(transform.forward * 3,ForceMode.Impulse);
         }
-        DOTween.To(() => PickerMovement.instance.speed, x => PickerMovement.instance.speed = x, 0, 1f).OnComplete(() =>
+        DOTween.To(() => PickerMovement.instance.speed, x => PickerMovement.instance.speed = x, 0, 0.5f).OnComplete(() =>
         {         
              StartCoroutine(CheckCoroutine(checkpoint.GetComponent<CheckPoint>()));
         });
@@ -35,19 +35,31 @@ public class LevelController : MonoBehaviour
             cp.pit.ground.DOMoveY(0.25f, 0.5f).SetEase(Ease.InOutBack).OnComplete(() =>
             {;
                 cp.pit.barrier.DORotate(new Vector3(0,0,90),1f);
-                DOTween.To(() => PickerMovement.instance.speed, x => PickerMovement.instance.speed = x, 3, 1f);
+                DOTween.To(() => PickerMovement.instance.speed, x => PickerMovement.instance.speed = x, PickerMovement.instance.firstSpeed, 1f);
                
             });
         }
         else StateManager.instance.UpdateGameState(GameState.Fail);
     }
-    public void Ramp()
+    public void Ramp(PickerMovement picker)
     {
         pickerMovement.meshCollider.enabled = false;
         pickerMovement.boxCollider.isTrigger=false;
         pickerMovement.rb.isKinematic = false;
         pickerMovement.rb.constraints = RigidbodyConstraints.None;
         pickerMovement.rb.constraints = RigidbodyConstraints.FreezePositionX;
-        canvas.inGame.Ramp();
+    }
+    public void StartScreen(PickerMovement picker)
+    {
+        pickerMovement.meshCollider.enabled = true;
+        pickerMovement.boxCollider.isTrigger = true;
+        pickerMovement.rb.isKinematic = true;
+        pickerMovement.rb.constraints = RigidbodyConstraints.FreezeRotationX;
+        pickerMovement.rb.constraints = RigidbodyConstraints.FreezeRotationZ;
+    }
+    public void LevelEnd(int score)
+    {
+        UIController.instance.inGame.UpdateMoney(score);    
+
     }
 }

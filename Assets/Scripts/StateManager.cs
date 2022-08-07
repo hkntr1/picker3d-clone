@@ -31,8 +31,13 @@ public class StateManager : MonoBehaviour
             case GameState.Runner:
                 Runner();
                 break;
+            case GameState.Ramp:
+                Ramp();
+                break;
             case GameState.Fail:
                 Fail();
+                break;
+            case GameState.Finish:
                 break;
         }
         OnGameStateChanged?.Invoke(newState);
@@ -40,6 +45,7 @@ public class StateManager : MonoBehaviour
     void StartScreen()
     {
         UIController.instance.StartScreen();
+        LevelController.instance.StartScreen(PickerMovement.instance);
     }
     void Runner()
     {
@@ -49,11 +55,18 @@ public class StateManager : MonoBehaviour
     {
         UIController.instance.Fail();
     }
-    
+    void Ramp()
+    {
+        UIController.instance.Ramp();
+        LevelController.instance.Ramp(PickerMovement.instance);
+       
+    }
 }
 public enum GameState
 {
     StartScreen,
     Runner,
+    Ramp,
     Fail,
+    Finish,
 }

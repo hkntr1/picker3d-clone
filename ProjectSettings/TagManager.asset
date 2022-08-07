@@ -9,6 +9,10 @@ TagManager:
   - Prize
   - Spawner
   - Ramp
+  - RampEnd
+  - PrizeGround
+  - LevelPoint
+  - LevelStart
   layers:
   - Default
   - TransparentFX

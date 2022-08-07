@@ -9,6 +9,7 @@ public class PickerController : MonoBehaviour
     public List<Ball> Balls;
     public GameObject Wings;
     public bool isCreated;
+    int prizeScore;
     #region Singleton
     public static PickerController instance;
 
@@ -20,6 +21,7 @@ public class PickerController : MonoBehaviour
   
     private void OnTriggerEnter(Collider other)
     {
+       
         if (other.CompareTag("Ball"))
         {
           Balls.Add(other.GetComponent<Ball>());
@@ -36,19 +38,37 @@ public class PickerController : MonoBehaviour
         }
         else if (other.CompareTag("Spawner"))
         {
-            other.GetComponent<SpawnerController>().StartSpawn();
-        
+            var modifier = other.GetComponent<SpawnerController>();
+            handleModifierState(modifier.ModifierType,other.transform);
         }
         else if (other.CompareTag("Ramp"))
         {
-            LevelController.instance.Ramp();
+            StateManager.instance.UpdateGameState(GameState.Ramp);
             if (!isCreated)
             {
             SceneManager.instance.CreateNextLevel();
-                isCreated = true;
+            isCreated = true;               
+            }
+        }
+        else if (other.CompareTag("RampEnd"))
+        {
+            PickerMovement.instance.isFly = true;
+        }
+        else if (other.CompareTag("PrizeGround"))
+        {
+            if (StateManager.instance.eState!=GameState.Finish)
+            {
+                PickerMovement.instance.isFly=false;
+                DOTween.To(() => PickerMovement.instance.speed, x => PickerMovement.instance.speed = x, 0, 1f);
+                prizeScore = other.GetComponent<LevelEndController>().point;
+                StartCoroutine(levelEnd(prizeScore));
             }
 
-
+        }
+        else if (other.CompareTag("LevelStart"))
+        {
+            StateManager.instance.UpdateGameState(GameState.StartScreen);
+            
         }
     }
     private void OnTriggerExit(Collider other)
@@ -58,6 +78,29 @@ public class PickerController : MonoBehaviour
             Balls.Remove(other.GetComponent<Ball>());
         }
     }
-    
+       IEnumerator levelEnd(int score)
+    {
+        StateManager.instance.UpdateGameState(GameState.Finish);
+        yield return new WaitForSeconds(1f);
+        LevelController.instance.LevelEnd(score);
+        PickerMovement.instance.speed=PickerMovement.instance.firstSpeed;
+        yield return new WaitForSeconds(10f);
+        SceneManager.instance.DestroyOldLevel();
+
+    }
+    private void handleModifierState(espawmerType modifierModifierType,Transform spawner)
+    {
+        switch (modifierModifierType)
+        {
+            case espawmerType.BALLBOMB:
+                spawner.GetComponent<SpawnerController>().BallBomb();
+                break;
+            case espawmerType.HELICOPTER:
+                spawner.GetComponent<SpawnerController>().StartSpawn();
+                break;
+        }
+
+    }
+
 
 }
