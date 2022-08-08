@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class InGameScreen : MonoBehaviour
 {
     [SerializeField] GameObject dynamicjoystick;
     public Slider forceController;
+    public Slider levelSlider;
     public TextMeshProUGUI moneyText;
     private void Start()
     {
@@ -26,6 +28,12 @@ public class InGameScreen : MonoBehaviour
     {
         forceController.gameObject.SetActive(false);
         dynamicjoystick.SetActive(true);
+        
+    }
+   public void CheckPointScreen()
+    {
+        LevelController.instance.checkpCounter++;
+        DOTween.To(() => levelSlider.value, x => levelSlider.value = x, LevelController.instance.checkpCounter, 1f);
     }
     private void Update()
     {

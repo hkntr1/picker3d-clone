@@ -6,6 +6,7 @@ public class LevelController : MonoBehaviour
 {
     public PickerMovement pickerMovement;
     public UIController canvas;
+    public int checkpCounter;
     #region Singleton
     public static LevelController instance;
 
@@ -24,7 +25,7 @@ public class LevelController : MonoBehaviour
         {         
              StartCoroutine(CheckCoroutine(checkpoint.GetComponent<CheckPoint>()));
         });
-
+       
     } 
     public IEnumerator CheckCoroutine(CheckPoint cp)
     {
@@ -36,7 +37,6 @@ public class LevelController : MonoBehaviour
             {;
                 cp.pit.barrier.DORotate(new Vector3(0,0,90),1f);
                 DOTween.To(() => PickerMovement.instance.speed, x => PickerMovement.instance.speed = x, PickerMovement.instance.firstSpeed, 1f);
-               
             });
         }
         else StateManager.instance.UpdateGameState(GameState.Fail);
@@ -59,7 +59,7 @@ public class LevelController : MonoBehaviour
     }
     public void LevelEnd(int score)
     {
-        UIController.instance.inGame.UpdateMoney(score);    
-
+        UIController.instance.inGame.UpdateMoney(score);
+        checkpCounter = 0;
     }
 }

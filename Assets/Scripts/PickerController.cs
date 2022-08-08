@@ -30,6 +30,7 @@ public class PickerController : MonoBehaviour
         {
             Wings.SetActive(false);
             LevelController.instance.CheckPoint(other.transform);
+            UIController.instance.inGame.CheckPointScreen();
         }
         else if (other.CompareTag("Prize"))
         {

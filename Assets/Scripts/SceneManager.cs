@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class SceneManager : MonoBehaviour
 {
     public List<LevelManager> levels;
@@ -19,7 +19,9 @@ public class SceneManager : MonoBehaviour
     {
         instance = this;
         money = PlayerPrefs.GetInt("money",0);
+        currentLevelIndex = PlayerPrefs.GetInt("Level", currentLevelIndex);
         current= Instantiate(levelsTransform[currentLevelIndex], gameStartPos.position, Quaternion.identity);
+        
     }
     #endregion
 
@@ -29,11 +31,15 @@ public class SceneManager : MonoBehaviour
         Transform newPos = levels[currentLevelIndex].levelEnd;
         current = Instantiate(levelsTransform[currentLevelIndex++],newPos.transform.position,Quaternion.identity); 
         currentLevel = current.GetComponent<LevelManager>();
-
-       
+   
     }
     public void DestroyOldLevel()
     {
         oldLevel.gameObject.SetActive(false);
+        PlayerPrefs.SetInt("Level", currentLevelIndex);
+    }
+    public void RestartGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
