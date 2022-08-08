@@ -27,14 +27,28 @@ public class SceneManager : MonoBehaviour
 
     public void CreateNextLevel()
     {
-        oldLevel=current.GetComponent<LevelManager>();
-        Transform newPos = levels[currentLevelIndex].levelEnd;
-        current = Instantiate(levelsTransform[currentLevelIndex++],newPos.transform.position,Quaternion.identity); 
-        currentLevel = current.GetComponent<LevelManager>();
+        oldLevel = current.GetComponent<LevelManager>();
+        if (currentLevelIndex > levelsTransform.Count)
+        {
+           
+            Transform newPos = levels[Random.Range(0, levels.Count)].levelEnd;
+            current = Instantiate(levelsTransform[Random.Range(0,levels.Count)], newPos.transform.position, Quaternion.identity);
+            currentLevelIndex = levelsTransform.IndexOf(current);
+            currentLevel = current.GetComponent<LevelManager>();
+        }
+        else
+        {
+            oldLevel = current.GetComponent<LevelManager>();
+            Transform newPos = levels[currentLevelIndex].levelEnd;
+            current = Instantiate(levelsTransform[currentLevelIndex + 1], newPos.transform.position, Quaternion.identity);
+            currentLevel = current.GetComponent<LevelManager>();
+        }
    
     }
     public void DestroyOldLevel()
     {
+        currentLevelIndex++;
+
         oldLevel.gameObject.SetActive(false);
         PlayerPrefs.SetInt("Level", currentLevelIndex);
     }
