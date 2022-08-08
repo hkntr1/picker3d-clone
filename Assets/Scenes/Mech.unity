@@ -2707,10 +2707,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - {fileID: 6315520745712529285, guid: 8012bb6879174854b9533aa2bf13af05, type: 3}
-  - {fileID: 6315520745712529285, guid: c432e29d9b20cbc4bb31c814d713a0f5, type: 3}
+  - {fileID: 6315520745712529285, guid: fb898f675bb119e4c8bf1abc12c6cbd0, type: 3}
+  - {fileID: 6315520745712529285, guid: b8f80888a7ee6974ea594d4349fffbe3, type: 3}
   levelsTransform:
   - {fileID: 4636791911731227261, guid: 8012bb6879174854b9533aa2bf13af05, type: 3}
-  - {fileID: 4636791911731227261, guid: c432e29d9b20cbc4bb31c814d713a0f5, type: 3}
+  - {fileID: 4636791911731227261, guid: fb898f675bb119e4c8bf1abc12c6cbd0, type: 3}
+  - {fileID: 4636791911731227261, guid: b8f80888a7ee6974ea594d4349fffbe3, type: 3}
   current: {fileID: 0}
   currentLevel: {fileID: 0}
   oldLevel: {fileID: 0}
